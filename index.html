@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>살까말까 · 내 후회 기준으로 리뷰를 다시 읽는 AI</title>
+<meta name="description" content="내가 예전에 후회한 이유를 기억해 두었다가, 살까 고민하는 상품의 리뷰에서 같은 불만을 찾아 근거와 함께 보여줍니다.">
+<meta name="theme-color" content="#ff6b4a">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&display=swap">
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<header class="top">
+  <div class="brand"><span class="logo">살까<b>말까</b></span><span class="tag">내 후회 기준으로 리뷰를 다시 읽는 AI</span></div>
+  <nav class="steps" id="steps">
+    <button data-go="profile" class="on"><i>1</i>내 후회 기준</button>
+    <button data-go="reviews"><i>2</i>리뷰 넣기</button>
+    <button data-go="result"><i>3</i>결과</button>
+    <button data-go="history"><i>4</i>구매 기록<em id="dueBadge" hidden></em></button>
+  </nav>
+</header>
+
+<main>
+<!-- 1. 후회 기준 -->
+<section id="v-profile" class="view on">
+  <div class="intro">
+    <h1>같은 리뷰도, 사람마다 다르게 읽어야 합니다</h1>
+    <p>별점 4.8 상품도 <b>나한테 중요한 단점</b>이 있으면 후회합니다. 예전에 후회했던 이유를 알려주면, 리뷰에서 같은 불만을 찾아 근거와 함께 보여드려요.</p>
+  </div>
+
+  <div class="card">
+    <h2>기준 고르기</h2>
+    <div class="pick" id="profilePick"></div>
+  </div>
+
+  <div class="card" id="builder" hidden>
+    <h2>내 기준 만들기</h2>
+    <p class="hint">① 후회했던 이유를 고르고 ② 기억나는 경험을 한 줄씩 적어 주세요. 반품 내역 캡처를 올려도 됩니다.</p>
+    <div class="chips" id="cards"></div>
+    <label class="lbl" for="stories">후회한 경험 (한 줄에 하나)</label>
+    <textarea id="stories" rows="4" placeholder="예) 패딩, 사진보다 납작하고 털이 계속 빠졌어요&#10;예) 무선청소기, 흡입력이 약한데 반품비를 내라고 했어요"></textarea>
+    <label class="file"><input type="file" id="returnImgs" accept="image/*" multiple> 반품·교환 내역 캡처 올리기 (선택)</label>
+    <div class="thumbs" id="returnThumbs"></div>
+    <button class="primary" id="makeProfile">AI로 내 후회 기준 만들기</button>
+  </div>
+
+  <div class="card" id="profileCard" hidden></div>
+</section>
+
+<!-- 2. 리뷰 넣기 -->
+<section id="v-reviews" class="view">
+  <div class="card">
+    <h2>살까 고민하는 상품의 리뷰</h2>
+    <div class="tabs" id="srcTabs">
+      <button data-src="demo" class="on">데모 상품</button>
+      <button data-src="shot">리뷰 캡처</button>
+      <button data-src="paste">붙여넣기</button>
+    </div>
+    <div class="src on" id="src-demo">
+      <p class="hint">시연용으로 만든 <b>가상 리뷰</b>입니다(실제 상품·후기 아님).</p>
+      <div class="products" id="demoProducts"></div>
+    </div>
+    <div class="src" id="src-shot">
+      <p class="hint">쇼핑몰 리뷰 화면을 캡처해서 올리면 AI가 리뷰를 읽어 옵니다. 한 번에 4장까지, 여러 번 추가할 수 있어요.</p>
+      <input class="txt" id="shotName" placeholder="상품 이름 (선택)">
+      <label class="file big"><input type="file" id="shotImgs" accept="image/*" multiple> 캡처 선택</label>
+      <div class="thumbs" id="shotThumbs"></div>
+      <p class="mini" id="shotCount"></p>
+    </div>
+    <div class="src" id="src-paste">
+      <p class="hint">리뷰 글을 복사해 붙여넣으세요. 빈 줄로 리뷰를 나눕니다.</p>
+      <input class="txt" id="pasteName" placeholder="상품 이름 (선택)">
+      <textarea id="pasteText" rows="8" placeholder="리뷰 1&#10;&#10;리뷰 2"></textarea>
+      <button class="ghost" id="usePaste">이 리뷰로 분석하기</button>
+    </div>
+  </div>
+</section>
+
+<!-- 3. 결과 -->
+<section id="v-result" class="view">
+  <div class="card" id="resultEmpty"><p class="hint">먼저 기준을 고르고 리뷰를 넣어 주세요.</p></div>
+  <div id="resultBox" hidden>
+    <div class="card verdict" id="verdictCard"></div>
+    <div class="card"><h2>내 후회 요인별로 보면</h2><div id="factorBars"></div><p class="mini" id="ruleNote"></p></div>
+    <div class="card"><h2>근거가 된 리뷰</h2><div id="evidence"></div></div>
+    <div class="card" id="adviseCard"><h2>사기 전에 물어보세요</h2><div id="advise"><p class="hint">AI가 질문을 정리하는 중…</p></div></div>
+    <div class="card compare"><h2>다른 사람 기준으로 보면?</h2><p class="hint">같은 리뷰라도 후회 기준이 다르면 결론이 달라져요.</p><div id="otherProfiles" class="pick small"></div></div>
+    <div class="card actions">
+      <button class="primary" id="bought">이 상품 샀어요 · 7일 뒤에 물어봐 주세요</button>
+      <p class="mini">산 뒤 만족했는지 알려주면 내 후회 기준이 더 정확해집니다.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 4. 구매 기록 -->
+<section id="v-history" class="view">
+  <div class="card"><h2>구매 기록과 피드백</h2><div id="historyList"></div></div>
+  <div class="card"><h2>내 기준이 바뀐 기록</h2><div id="learnLog"><p class="hint">아직 없어요.</p></div></div>
+</section>
+</main>
+
+<div class="progress" id="progress" hidden><div class="bar"><span id="progBar"></span></div><p id="progText">분석 중…</p></div>
+<div class="toast" id="toast" hidden></div>
+
+<footer class="foot">
+  <p>프로필·기록은 이 브라우저에만 저장됩니다(서버 저장 없음). 데모 리뷰는 모두 가상입니다.</p>
+  <p class="mini" id="usage"></p>
+</footer>
+<script type="module" src="/app.js"></script>
+</body>
+</html>

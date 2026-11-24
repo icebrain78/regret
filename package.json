@@ -1,0 +1,7 @@
+{
+  "name": "salkka",
+  "private": true,
+  "type": "module",
+  "description": "살까말까 - 내 후회 기준으로 리뷰를 다시 읽는 AI",
+  "engines": { "node": ">=20" }
+}
