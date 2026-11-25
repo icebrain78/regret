@@ -83,7 +83,7 @@ function renderProfileCard() {
   el.hidden = false;
   el.innerHTML = `<h2>${esc(p.name)}${p.demo ? '<span class="badge">데모 프로필</span>' : ''}</h2>
     <p class="hint">${esc(p.summary || '')}</p>
-    ${p.stories?.length ? `<p class="mini">후회 경험(데모용 예시, 실제 후기 아님)</p><ul class="tips">${p.stories.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
+    ${p.stories?.length ? `<p class="mini">${p.demo ? '후회 경험(데모용 예시, 실제 후기 아님)' : '내가 적은 후회 경험'}</p><ul class="tips">${p.stories.map(s => `<li>${esc(s)}</li>`).join('')}</ul>` : ''}
     <div style="margin-top:12px">${p.factors.map(f => `<div class="factor">
       <div class="nm"><b>${esc(f.name)}</b><small>${esc(f.desc)}</small><div class="kw">${(f.keywords || []).slice(0, 8).map(k => `<span>${esc(k)}</span>`).join('')}</div></div>
       <div class="w">${p.demo ? '' : `<button data-f="${f.id}" data-d="-1" aria-label="중요도 낮추기">−</button>`}
