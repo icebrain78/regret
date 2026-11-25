@@ -189,20 +189,20 @@ function trimCache() { const ks = Object.keys(S.analyses); if (ks.length > 12) k
 async function runAI(p, product) {
   const reviews = product.reviews; const batches = [];
   for (let i = 0; i < reviews.length; i += BATCH) batches.push(reviews.slice(i, i + BATCH));
-  const matched = {}; let done = 0;
+  const matched = {}; const ads = []; let done = 0;
   const step = () => progress(true, 10 + 85 * done / batches.length, `내 기준으로 리뷰 ${reviews.length}개를 읽는 중… (${done}/${batches.length})`);
   step();
-  const send = async b => { const out = await api('analyze', { profile: p, reviews: b }); for (const r of out.results) matched[r.id] = r.m; done++; step(); };
+  const send = async b => { const out = await api('analyze', { profile: p, reviews: b }); for (const r of out.results) { if (r.m.length) matched[r.id] = r.m; if (r.ad) ads.push(r.id); } done++; step(); };
   try {
     await send(batches[0]); // 첫 요청으로 캐시를 만든 뒤
     const rest = batches.slice(1); let idx = 0;
     await Promise.all(Array.from({ length: Math.min(3, rest.length) }, async () => { while (idx < rest.length) await send(rest[idx++]); }));
   } finally { progress(false); }
-  return summarize(p, product, matched, 'ai');
+  return summarize(p, product, matched, 'ai', ads);
 }
 
 function runKeyword(p, product) {
-  const matched = {};
+  const matched = {}; const ads = [];
   for (const r of product.reviews) {
     const m = [];
     for (const f of p.factors) {
@@ -210,17 +210,22 @@ function runKeyword(p, product) {
       if (k) m.push({ f: f.id, q: k, s: 1 });
     }
     if (m.length) matched[r.id] = m;
+    if (/체험단|협찬|제공받|원고료|서포터즈/.test(r.text)) ads.push(r.id);
   }
-  return summarize(p, product, matched, 'keyword');
+  return summarize(p, product, matched, 'keyword', ads);
 }
 
-function summarize(p, product, matched, mode) {
-  const total = product.reviews.length; const per = {};
-  for (const f of p.factors) per[f.id] = { count: 0, strong: 0, items: [] };
-  for (const [id, ms] of Object.entries(matched)) for (const m of ms) {
-    const x = per[m.f]; if (!x) continue; x.count++; if (m.s >= 3) x.strong++; x.items.push({ id, q: m.q, s: m.s });
-  }
-  return { mode, total, per, matched, productKey: product.key, productName: product.name };
+function summarize(p, product, matched, mode, ads = []) {
+  const res = { mode, total: product.reviews.length, matched, ads, productKey: product.key, productName: product.name };
+  res.per = view(p, res, false).per; return res;
+}
+// 대가성 의심 리뷰를 뺄지 여부에 따라 요인별 집계를 다시 계산
+function view(p, res, exAds) {
+  const ads = new Set(exAds ? (res.ads || []) : []);
+  const per = {}; for (const f of p.factors) per[f.id] = { count: 0, strong: 0, items: [] };
+  for (const [id, ms] of Object.entries(res.matched || {})) { if (ads.has(id)) continue; for (const m of ms) {
+    const x = per[m.f]; if (!x) continue; x.count++; if (m.s >= 3) x.strong++; x.items.push({ id, q: m.q, s: m.s }); } }
+  return { total: res.total - ads.size, per };
 }
 
 function levelOf(w, ratio, count) {
@@ -229,49 +234,55 @@ function levelOf(w, ratio, count) {
   if ((w === 3 && ratio >= 0.02) || (w === 2 && ratio >= 0.03) || (w === 1 && ratio >= 0.10)) return 'y';
   return 'g';
 }
-function judge(p, res) {
-  let worst = 'g'; const rank = { g: 0, y: 1, r: 2 };
-  const rows = p.factors.map(f => { const x = res.per[f.id] || { count: 0, strong: 0 }; const ratio = res.total ? x.count / res.total : 0; const lv = levelOf(f.weight, ratio, x.count); if (rank[lv] > rank[worst]) worst = lv; return { f, x, ratio, lv }; });
-  return { worst, rows };
+function judge(p, res, exAds = S.exAds) {
+  let worst = 'g'; const rank = { g: 0, y: 1, r: 2 }; const v = view(p, res, exAds);
+  const rows = p.factors.map(f => { const x = v.per[f.id] || { count: 0, strong: 0, items: [] }; const ratio = v.total ? x.count / v.total : 0; const lv = levelOf(f.weight, ratio, x.count); if (rank[lv] > rank[worst]) worst = lv; return { f, x, ratio, lv }; });
+  return { worst, rows, total: v.total, per: v.per };
 }
 
 function renderResult() {
   const p = getProfile(S.resultProfileId); const res = S.result; if (!p || !res) return;
   $('#resultEmpty').hidden = true; $('#resultBox').hidden = false;
-  const { worst, rows } = judge(p, res);
+  const { worst, rows, total, per } = judge(p, res);
   const label = { r: ['후회 주의', 'red'], y: ['확인 필요', 'yellow'], g: ['괜찮아 보임', 'green'] }[worst];
   const top = rows.filter(r => r.x.count).sort((a, b) => b.f.weight * b.ratio - a.f.weight * a.ratio)[0];
   const modeNote = res.mode === 'keyword' ? '<div class="banner">AI 연결이 안 돼 <b>간이 분석(단어 찾기)</b> 결과입니다. "소리가 조용해요"처럼 칭찬도 불만으로 셀 수 있어요.</div>'
     : res.mode === 'cached' ? '<p class="mini">미리 분석해 둔 결과입니다 · <button class="more" id="reRun">지금 다시 분석</button></p>' : '';
   $('#verdictCard').className = 'card verdict ' + label[1];
   $('#verdictCard').innerHTML = `${modeNote}<div class="light"><div class="lamp"></div><div><h3>${label[0]}</h3>
-    <p>${esc(res.productName)} · 리뷰 ${res.total}개${S.product?.avg ? ` · 평균 ★${S.product.avg}` : ''}</p></div></div>
+    <p>${esc(res.productName)} · 리뷰 ${total}개${S.exAds && res.ads?.length ? ` (대가성 의심 ${res.ads.length}개 제외)` : ''}${S.product?.avg ? ` · 평균 ★${S.product.avg}` : ''}</p></div></div>
     <p class="vtext">${top ? `<b>${esc(top.f.name)}</b> 불만이 리뷰 ${top.x.count}개(${(top.ratio * 100).toFixed(1)}%)에서 나왔어요.` : '내 후회 요인에 해당하는 불만을 거의 찾지 못했어요.'}</p>
     <p class="who">기준: <b>${esc(p.name)}</b>${p.demo ? ' (데모)' : ''}</p>`;
   const rr = $('#reRun'); if (rr) rr.onclick = () => { delete S.analyses[profileKey(p) + '|' + res.productKey]; S.demoCache[p.id + '|' + res.productKey] = null; startAnalysis(S.product, p.id); };
 
   $('#factorBars').innerHTML = rows.map(({ f, x, ratio, lv }) => `<div class="bar-row"><div class="bar-top"><span><b>${esc(f.name)}</b> <span class="dots">${'●'.repeat(f.weight)}${'○'.repeat(3 - f.weight)}</span></span>
-      <span>${x.count}/${res.total}개 · ${(ratio * 100).toFixed(1)}%${x.strong ? ` · 강한 불만 ${x.strong}` : ''}</span></div>
+      <span>${x.count}/${total}개 · ${(ratio * 100).toFixed(1)}%${x.strong ? ` · 강한 불만 ${x.strong}` : ''}</span></div>
       <div class="track"><span class="${lv === 'r' ? 'r' : lv === 'y' ? 'y' : ''}" style="width:${Math.min(100, ratio * 100 * 4)}%"></span></div></div>`).join('');
   $('#ruleNote').textContent = '판정 기준: 중요도 ●●● 요인이 6% 이상(●● 10% 이상)이면 후회 주의, ●●● 2% 이상·●● 3% 이상이면 확인 필요. 막대는 4배 확대해 표시.';
 
-  renderEvidence(p, res, rows.find(r => r.x.count)?.f.id);
+  const adBox = $('#adToggle');
+  adBox.innerHTML = res.ads?.length ? `<div class="banner">체험단·협찬 등 <b>대가성 의심 리뷰 ${res.ads.length}개</b>를 찾았어요.
+      <label style="display:block;margin-top:6px"><input type="checkbox" id="exAds" ${S.exAds ? 'checked' : ''}> 이 리뷰들을 빼고 다시 계산하기</label></div>` : '';
+  const ex = $('#exAds'); if (ex) ex.onchange = () => { S.exAds = ex.checked; renderResult(); };
+  renderEvidence(p, res, rows.find(r => r.x.count)?.f.id, per);
+  renderCompare(p, res);
   renderAdvise(res.advise);
   $('#otherProfiles').innerHTML = allProfiles().filter(x => x.id !== p.id).map(x => `<button data-id="${esc(x.id)}"><b>${esc(x.name)}${x.demo ? '<span class="badge">데모</span>' : ''}</b><span>이 기준으로 같은 리뷰 보기</span></button>`).join('');
   $$('#otherProfiles button').forEach(b => b.onclick = () => startAnalysis(S.product, b.dataset.id));
   $('#bought').onclick = () => addPurchase(p, res);
 }
 
-function renderEvidence(p, res, fid) {
+function renderEvidence(p, res, fid, per = res.per) {
   const box = $('#evidence'); const text = Object.fromEntries((S.product?.reviews || []).map(r => [r.id, r]));
-  const tabs = p.factors.filter(f => res.per[f.id]?.count);
+  const adSet = new Set(res.ads || []);
+  const tabs = p.factors.filter(f => per[f.id]?.count);
   if (!tabs.length) { box.innerHTML = '<p class="hint">해당하는 리뷰가 없어요.</p>'; return; }
   let limit = 5;
   const draw = () => {
-    const items = [...res.per[fid].items].sort((a, b) => b.s - a.s);
-    box.innerHTML = `<div class="evtabs">${tabs.map(f => `<button data-f="${f.id}" class="${f.id === fid ? 'on' : ''}">${esc(f.name)} ${res.per[f.id].count}</button>`).join('')}</div>` +
+    const items = [...per[fid].items].sort((a, b) => b.s - a.s);
+    box.innerHTML = `<div class="evtabs">${tabs.map(f => `<button data-f="${f.id}" class="${f.id === fid ? 'on' : ''}">${esc(f.name)} ${per[f.id].count}</button>`).join('')}</div>` +
       items.slice(0, limit).map(it => { const r = text[it.id]; const body = r ? highlight(r.text, it.q) : `<mark>${esc(it.q)}</mark>`;
-        return `<div class="ev"><div class="meta">${r?.rating ? '★'.repeat(r.rating) : ''} ${it.s >= 3 ? '· 강한 불만' : ''}</div><p>${body}</p></div>`; }).join('') +
+        return `<div class="ev"><div class="meta">${r?.rating ? '★'.repeat(r.rating) : ''} ${it.s >= 3 ? '· 강한 불만' : ''}${adSet.has(it.id) ? ' · <b>대가성 의심</b>' : ''}</div><p>${body}</p></div>`; }).join('') +
       (items.length > limit ? `<button class="more" id="evMore">${items.length - limit}개 더 보기</button>` : '');
     $$('.evtabs button', box).forEach(b => b.onclick = () => { fid = b.dataset.f; limit = 5; draw(); });
     const m = $('#evMore'); if (m) m.onclick = () => { limit += 10; draw(); };
@@ -280,9 +291,25 @@ function renderEvidence(p, res, fid) {
 }
 function highlight(t, q) { const i = q ? t.indexOf(q) : -1; if (i < 0) return esc(t) + (q ? ` <mark>${esc(q)}</mark>` : ''); return esc(t.slice(0, i)) + '<mark>' + esc(q) + '</mark>' + esc(t.slice(i + q.length)); }
 
+function comparable(p) {
+  const out = {}; const pk = profileKey(p) + '|';
+  for (const [k, v] of Object.entries(S.analyses)) if (k.startsWith(pk)) out[v.productKey] = v;
+  if (p.demo) for (const [k, v] of Object.entries(S.demoCache)) if (v && k.startsWith(p.id + '|') && !out[v.productKey]) out[v.productKey] = v;
+  return Object.values(out);
+}
+function renderCompare(p, cur) {
+  const list = comparable(p); if (!list.some(r => r.productKey === cur.productKey)) list.unshift(cur);
+  const box = $('#compareBox');
+  if (list.length < 2) { box.innerHTML = '<p class="hint">같은 기준으로 다른 상품을 분석하면 여기에 나란히 보여드려요.</p>'; return; }
+  const name = { r: '🔴 후회 주의', y: '🟡 확인 필요', g: '🟢 괜찮아 보임' };
+  box.innerHTML = list.map(r => { const j = judge(p, r); const tops = j.rows.filter(x => x.x.count).sort((a, b) => b.f.weight * b.ratio - a.f.weight * a.ratio).slice(0, 3);
+    return `<div class="hist${r.productKey === cur.productKey ? ' cur' : ''}"><div class="row"><b>${esc(r.productName)}</b><span>${name[j.worst]}</span></div>
+      <p class="mini">${tops.length ? tops.map(t => `${esc(t.f.name)} ${(t.ratio * 100).toFixed(1)}%`).join(' · ') : '내 후회 요인 불만 거의 없음'} · 리뷰 ${j.total}개</p></div>`; }).join('');
+}
+
 async function loadAdvise(p, product, res, ck) {
-  const { rows } = judge(p, res);
-  const findings = rows.map(({ f, x, ratio }) => ({ 요인: f.name, 중요도: f.weight, 불만리뷰: x.count, 전체: res.total, 비율: (ratio * 100).toFixed(1) + '%', 근거: x.items.slice(0, 4).map(i => i.q) }));
+  const { rows, total } = judge(p, res, false);
+  const findings = rows.map(({ f, x, ratio }) => ({ 요인: f.name, 중요도: f.weight, 불만리뷰: x.count, 전체: total, 비율: (ratio * 100).toFixed(1) + '%', 근거: x.items.slice(0, 4).map(i => i.q) }));
   try {
     const out = await api('advise', { product: product.name, findings });
     res.advise = { verdict: out.verdict, questions: out.questions || [], tips: out.tips || [] };

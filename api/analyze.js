@@ -19,10 +19,13 @@ const RUBRIC = `너는 상품 리뷰를 "특정 사용자의 후회 기준"으�
 4. 근거 q: 리뷰 원문에서 그 판단의 근거가 되는 부분을 "글자 그대로" 짧게 복사한다(최대 40자). 바꿔 쓰지 않는다.
 5. 강도 s: 1=가볍게 언급, 2=분명한 불만, 3=반품·사용 포기 수준.
 6. 확실하지 않으면 매칭하지 않는다(과탐보다 놓침이 낫다는 뜻은 아니며, 문맥상 분명한 것만).
+7. 대가성 의심 ad: 리뷰가 체험단·협찬·업체 제공·원고료·서포터즈·직원 작성 등 대가를 받고 썼다고 밝히거나 강하게 드러내면 "ad":true.
+   - 예) "업체로부터 제품을 무상으로 제공받아 작성한 후기입니다", "체험단으로 써 봤어요" → ad
+   - 단순히 칭찬이 많거나 짧다는 이유만으로는 표시하지 않는다.
 
 입력 형식: 한 줄에 하나씩 "리뷰ID | 별점 | 본문".
-출력: JSON 하나만. 해당 요인이 하나라도 있는 리뷰만 넣는다(없으면 빈 배열).
-{"results":[{"id":"리뷰ID","m":[{"f":"F1","q":"근거 원문","s":2}]}]}`;
+출력: JSON 하나만. 해당 요인이 하나라도 있거나 ad인 리뷰만 넣는다(없으면 빈 배열). ad가 아니면 ad는 생략.
+{"results":[{"id":"리뷰ID","m":[{"f":"F1","q":"근거 원문","s":2}],"ad":true}]}`;
 
 export default handler(async (body) => {
   const p = body.profile;
@@ -43,7 +46,7 @@ export default handler(async (body) => {
   const ids = new Set(reviews.map(r => r.id));
   const fids = new Set(p.factors.map(f => f.id));
   const results = (out.results || []).filter(r => ids.has(r.id)).map(r => ({
-    id: r.id, m: (r.m || []).filter(x => fids.has(x.f)).map(x => ({ f: x.f, q: String(x.q || '').slice(0, 60), s: Number(x.s) || 1 })),
-  })).filter(r => r.m.length);
+    id: r.id, ad: r.ad === true, m: (r.m || []).filter(x => fids.has(x.f)).map(x => ({ f: x.f, q: String(x.q || '').slice(0, 60), s: Number(x.s) || 1 })),
+  })).filter(r => r.m.length || r.ad);
   return { results, usage };
 });

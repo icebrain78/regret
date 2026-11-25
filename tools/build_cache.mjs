@@ -8,12 +8,15 @@ const cache = {}; const usage = { input: 0, output: 0, cache_read: 0, cache_writ
 const report = [];
 for (const p of demo.profiles) for (const prod of demo.products) {
   const batches = []; for (let i = 0; i < prod.reviews.length; i += 40) batches.push(prod.reviews.slice(i, i + 40));
-  const matched = {};
-  const send = async b => { const o = await post('analyze', { profile: p, reviews: b }); for (const r of o.results) matched[r.id] = r.m; usage.calls++; for (const k of ['input','output','cache_read','cache_write']) usage[k] += o.usage?.[k] || 0; };
+  const matched = {}; const ads = [];
+  const send = async b => { const o = await post('analyze', { profile: p, reviews: b }); for (const r of o.results) { if (r.m.length) matched[r.id] = r.m; if (r.ad) ads.push(r.id); } usage.calls++; for (const k of ['input','output','cache_read','cache_write']) usage[k] += o.usage?.[k] || 0; };
   await send(batches[0]); await Promise.all(batches.slice(1).map(send));
   const per = {}; for (const f of p.factors) per[f.id] = { count: 0, strong: 0, items: [] };
   for (const [id, ms] of Object.entries(matched)) for (const m of ms) { const x = per[m.f]; if (!x) continue; x.count++; if (m.s >= 3) x.strong++; x.items.push({ id, q: m.q, s: m.s }); }
-  cache[p.id + '|demo:' + prod.id] = { mode: 'ai', total: prod.reviews.length, per, matched, productKey: 'demo:' + prod.id, productName: prod.name, at: Date.now() };
+  cache[p.id + '|demo:' + prod.id] = { mode: 'ai', total: prod.reviews.length, per, matched, ads, productKey: 'demo:' + prod.id, productName: prod.name, at: Date.now() };
+  { let tp = 0, fp = 0, fn = 0; const A = new Set(ads);
+    for (const r of prod.reviews) { const g = (truth[prod.id][r.id] || []).includes('대가성'); const pr = A.has(r.id); if (g && pr) tp++; else if (pr) fp++; else if (g) fn++; }
+    report.push({ profile: p.id, product: prod.id, factor: '대가성 의심', tp, fp, fn }); }
   // 정확도: 요인 이름 == 정답 태그 기준
   for (const f of p.factors) {
     let tp = 0, fp = 0, fn = 0;

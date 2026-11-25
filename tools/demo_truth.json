@@ -10,7 +10,7 @@
   "humid-006": [],
   "humid-007": [],
   "humid-008": [
-   "소음·진동"
+   "대가성"
   ],
   "humid-009": [],
   "humid-010": [
@@ -30,7 +30,7 @@
   "humid-020": [],
   "humid-021": [],
   "humid-022": [
-   "소음·진동"
+   "냄새"
   ],
   "humid-023": [],
   "humid-024": [],
@@ -41,7 +41,7 @@
   "humid-029": [],
   "humid-030": [],
   "humid-031": [
-   "소음·진동"
+   "냄새"
   ],
   "humid-032": [],
   "humid-033": [],
@@ -55,35 +55,39 @@
   "humid-041": [],
   "humid-042": [],
   "humid-043": [
-   "냄새"
+   "소음·진동"
   ],
   "humid-044": [],
   "humid-045": [],
   "humid-046": [],
   "humid-047": [],
   "humid-048": [
-   "냄새"
+   "소음·진동"
   ],
   "humid-049": [],
   "humid-050": [
-   "소음·진동"
-  ],
-  "humid-051": [
    "성능 부족"
   ],
-  "humid-052": [
+  "humid-051": [
    "소음·진동"
+  ],
+  "humid-052": [
+   "냄새"
   ],
   "humid-053": [],
   "humid-054": [],
   "humid-055": [],
   "humid-056": [],
-  "humid-057": [],
-  "humid-058": [],
+  "humid-057": [
+   "냄새"
+  ],
+  "humid-058": [
+   "소음·진동"
+  ],
   "humid-059": [],
   "humid-060": [],
   "humid-061": [
-   "소음·진동"
+   "대가성"
   ],
   "humid-062": [],
   "humid-063": [],
@@ -92,16 +96,16 @@
   ],
   "humid-065": [],
   "humid-066": [
-   "소음·진동"
+   "냄새"
   ],
   "humid-067": [],
   "humid-068": [],
   "humid-069": [
-   "성능 부족"
+   "대가성"
   ],
   "humid-070": [],
   "humid-071": [
-   "냄새"
+   "대가성"
   ],
   "humid-072": [],
   "humid-073": [],
@@ -114,11 +118,11 @@
    "소음·진동"
   ],
   "humid-080": [
-   "냄새"
+   "소음·진동"
   ],
   "humid-081": [],
   "humid-082": [
-   "소음·진동"
+   "대가성"
   ],
   "humid-083": [],
   "humid-084": [
@@ -133,20 +137,28 @@
   "humid-091": [],
   "humid-092": [],
   "humid-093": [],
-  "humid-094": [],
-  "humid-095": [],
+  "humid-094": [
+   "소음·진동"
+  ],
+  "humid-095": [
+   "소음·진동"
+  ],
   "humid-096": [],
-  "humid-097": [],
+  "humid-097": [
+   "성능 부족"
+  ],
   "humid-098": [],
   "humid-099": [],
   "humid-100": [],
   "humid-101": [
-   "냄새"
+   "소음·진동"
   ],
   "humid-102": [],
   "humid-103": [],
   "humid-104": [],
-  "humid-105": [],
+  "humid-105": [
+   "냄새"
+  ],
   "humid-106": [],
   "humid-107": [],
   "humid-108": [],
@@ -159,23 +171,27 @@
   "humid-113": [],
   "humid-114": [],
   "humid-115": [
+   "소음·진동"
+  ],
+  "humid-116": [
    "냄새"
   ],
-  "humid-116": [],
   "humid-117": [
-   "소음·진동"
+   "대가성"
   ],
   "humid-118": [
    "소음·진동"
   ],
   "humid-119": [
-   "소음·진동"
+   "대가성"
   ],
   "humid-120": [],
   "humid-121": [],
   "humid-122": [],
   "humid-123": [],
-  "humid-124": [],
+  "humid-124": [
+   "소음·진동"
+  ],
   "humid-125": [],
   "humid-126": [],
   "humid-127": [],
@@ -183,7 +199,7 @@
   "humid-129": [],
   "humid-130": [],
   "humid-131": [
-   "소음·진동"
+   "대가성"
   ],
   "humid-132": [],
   "humid-133": [],
@@ -191,7 +207,7 @@
   "humid-135": [],
   "humid-136": [],
   "humid-137": [
-   "냄새"
+   "소음·진동"
   ],
   "humid-138": [],
   "humid-139": [],
@@ -213,237 +229,251 @@
   "vacuum-001": [],
   "vacuum-002": [],
   "vacuum-003": [],
-  "vacuum-004": [],
-  "vacuum-005": [],
+  "vacuum-004": [
+   "숨은 추가 비용"
+  ],
+  "vacuum-005": [
+   "대가성"
+  ],
   "vacuum-006": [],
   "vacuum-007": [],
   "vacuum-008": [],
   "vacuum-009": [],
-  "vacuum-010": [
-   "숨은 추가 비용"
-  ],
-  "vacuum-011": [
-   "성능 부족"
-  ],
+  "vacuum-010": [],
+  "vacuum-011": [],
   "vacuum-012": [],
   "vacuum-013": [],
-  "vacuum-014": [
-   "숨은 추가 비용"
-  ],
+  "vacuum-014": [],
   "vacuum-015": [],
-  "vacuum-016": [
-   "성능 부족"
-  ],
+  "vacuum-016": [],
   "vacuum-017": [],
-  "vacuum-018": [],
+  "vacuum-018": [
+   "반품비 부담"
+  ],
   "vacuum-019": [],
   "vacuum-020": [],
-  "vacuum-021": [],
+  "vacuum-021": [
+   "반품비 부담"
+  ],
   "vacuum-022": [],
   "vacuum-023": [],
-  "vacuum-024": [],
+  "vacuum-024": [
+   "냄새"
+  ],
   "vacuum-025": [],
-  "vacuum-026": [],
+  "vacuum-026": [
+   "소음·진동"
+  ],
   "vacuum-027": [],
   "vacuum-028": [],
-  "vacuum-029": [],
+  "vacuum-029": [
+   "성능 부족"
+  ],
   "vacuum-030": [],
   "vacuum-031": [],
   "vacuum-032": [],
   "vacuum-033": [],
-  "vacuum-034": [],
-  "vacuum-035": [
-   "소음·진동"
+  "vacuum-034": [
+   "성능 부족"
   ],
+  "vacuum-035": [],
   "vacuum-036": [],
   "vacuum-037": [],
   "vacuum-038": [],
   "vacuum-039": [],
-  "vacuum-040": [],
-  "vacuum-041": [],
-  "vacuum-042": [
-   "반품비 부담"
-  ],
-  "vacuum-043": [
+  "vacuum-040": [
    "숨은 추가 비용"
   ],
+  "vacuum-041": [],
+  "vacuum-042": [],
+  "vacuum-043": [],
   "vacuum-044": [],
   "vacuum-045": [],
   "vacuum-046": [],
   "vacuum-047": [],
-  "vacuum-048": [],
-  "vacuum-049": [
-   "소음·진동"
+  "vacuum-048": [
+   "숨은 추가 비용"
   ],
-  "vacuum-050": [
-   "소음·진동"
-  ],
+  "vacuum-049": [],
+  "vacuum-050": [],
   "vacuum-051": [],
   "vacuum-052": [],
   "vacuum-053": [],
-  "vacuum-054": [
-   "성능 부족"
-  ],
+  "vacuum-054": [],
   "vacuum-055": [],
   "vacuum-056": [
-   "소음·진동"
+   "성능 부족"
   ],
   "vacuum-057": [],
   "vacuum-058": [],
   "vacuum-059": [],
   "vacuum-060": [],
   "vacuum-061": [
-   "성능 부족"
-  ],
-  "vacuum-062": [],
-  "vacuum-063": [],
-  "vacuum-064": [
    "소음·진동"
   ],
-  "vacuum-065": [
-   "성능 부족"
+  "vacuum-062": [
+   "반품비 부담"
   ],
+  "vacuum-063": [
+   "소음·진동"
+  ],
+  "vacuum-064": [],
+  "vacuum-065": [],
   "vacuum-066": [],
   "vacuum-067": [],
   "vacuum-068": [],
-  "vacuum-069": [],
-  "vacuum-070": [],
-  "vacuum-071": [
+  "vacuum-069": [
    "반품비 부담"
   ],
+  "vacuum-070": [],
+  "vacuum-071": [],
   "vacuum-072": [
-   "성능 부족"
-  ],
-  "vacuum-073": [],
-  "vacuum-074": [
    "소음·진동"
   ],
+  "vacuum-073": [],
+  "vacuum-074": [],
   "vacuum-075": [],
   "vacuum-076": [],
   "vacuum-077": [],
   "vacuum-078": [],
-  "vacuum-079": [
+  "vacuum-079": [],
+  "vacuum-080": [
    "숨은 추가 비용"
   ],
-  "vacuum-080": [
-   "성능 부족"
-  ],
-  "vacuum-081": [
-   "성능 부족"
-  ],
+  "vacuum-081": [],
   "vacuum-082": [],
   "vacuum-083": [],
-  "vacuum-084": [],
-  "vacuum-085": [],
-  "vacuum-086": [
-   "숨은 추가 비용"
+  "vacuum-084": [
+   "반품비 부담"
   ],
+  "vacuum-085": [],
+  "vacuum-086": [],
   "vacuum-087": [],
   "vacuum-088": [],
   "vacuum-089": [],
   "vacuum-090": [
-   "성능 부족"
+   "소음·진동"
   ],
   "vacuum-091": [
    "성능 부족"
   ],
-  "vacuum-092": [],
-  "vacuum-093": [],
-  "vacuum-094": [],
-  "vacuum-095": [
+  "vacuum-092": [
    "성능 부족"
   ],
-  "vacuum-096": [],
+  "vacuum-093": [],
+  "vacuum-094": [
+   "성능 부족"
+  ],
+  "vacuum-095": [],
+  "vacuum-096": [
+   "대가성"
+  ],
   "vacuum-097": [],
   "vacuum-098": [],
   "vacuum-099": [],
   "vacuum-100": [],
-  "vacuum-101": [],
-  "vacuum-102": [
+  "vacuum-101": [
+   "냄새"
+  ],
+  "vacuum-102": [],
+  "vacuum-103": [
    "성능 부족"
   ],
-  "vacuum-103": [],
-  "vacuum-104": [],
-  "vacuum-105": [],
+  "vacuum-104": [
+   "대가성"
+  ],
+  "vacuum-105": [
+   "소음·진동"
+  ],
   "vacuum-106": [],
   "vacuum-107": [],
   "vacuum-108": [],
   "vacuum-109": [
-   "냄새"
+   "대가성"
   ],
-  "vacuum-110": [],
+  "vacuum-110": [
+   "숨은 추가 비용"
+  ],
   "vacuum-111": [],
   "vacuum-112": [],
   "vacuum-113": [],
-  "vacuum-114": [],
+  "vacuum-114": [
+   "성능 부족"
+  ],
   "vacuum-115": [
-   "숨은 추가 비용"
+   "성능 부족"
   ],
-  "vacuum-116": [],
-  "vacuum-117": [],
-  "vacuum-118": [
-   "숨은 추가 비용"
-  ],
-  "vacuum-119": [],
-  "vacuum-120": [
+  "vacuum-116": [
    "반품비 부담"
   ],
+  "vacuum-117": [
+   "성능 부족"
+  ],
+  "vacuum-118": [],
+  "vacuum-119": [],
+  "vacuum-120": [
+   "성능 부족"
+  ],
   "vacuum-121": [],
-  "vacuum-122": [],
+  "vacuum-122": [
+   "성능 부족"
+  ],
   "vacuum-123": [],
   "vacuum-124": [],
   "vacuum-125": [],
   "vacuum-126": [
-   "성능 부족"
+   "대가성"
   ],
   "vacuum-127": [],
-  "vacuum-128": [
-   "냄새"
+  "vacuum-128": [],
+  "vacuum-129": [
+   "대가성"
   ],
-  "vacuum-129": [],
-  "vacuum-130": [
-   "성능 부족"
-  ],
+  "vacuum-130": [],
   "vacuum-131": [],
   "vacuum-132": [
    "숨은 추가 비용"
   ],
-  "vacuum-133": [
-   "반품비 부담"
-  ],
+  "vacuum-133": [],
   "vacuum-134": [
+   "성능 부족"
+  ],
+  "vacuum-135": [],
+  "vacuum-136": [],
+  "vacuum-137": [
    "소음·진동"
   ],
-  "vacuum-135": [
-   "성능 부족"
-  ],
-  "vacuum-136": [],
-  "vacuum-137": [],
   "vacuum-138": [],
-  "vacuum-139": [],
-  "vacuum-140": [
+  "vacuum-139": [
    "성능 부족"
   ],
+  "vacuum-140": [],
   "vacuum-141": [],
   "vacuum-142": [],
-  "vacuum-143": [],
-  "vacuum-144": [],
-  "vacuum-145": [],
-  "vacuum-146": [],
-  "vacuum-147": [
+  "vacuum-143": [
    "소음·진동"
   ],
-  "vacuum-148": [
-   "반품비 부담"
+  "vacuum-144": [],
+  "vacuum-145": [],
+  "vacuum-146": [
+   "숨은 추가 비용"
   ],
-  "vacuum-149": [],
+  "vacuum-147": [],
+  "vacuum-148": [
+   "숨은 추가 비용"
+  ],
+  "vacuum-149": [
+   "성능 부족"
+  ],
   "vacuum-150": [
-   "반품비 부담"
+   "성능 부족"
   ]
  },
  "padding": {
   "padding-001": [],
-  "padding-002": [],
+  "padding-002": [
+   "털 빠짐·이염"
+  ],
   "padding-003": [
    "털 빠짐·이염"
   ],
@@ -467,15 +497,17 @@
   "padding-015": [],
   "padding-016": [],
   "padding-017": [],
-  "padding-018": [],
+  "padding-018": [
+   "털 빠짐·이염"
+  ],
   "padding-019": [],
   "padding-020": [],
   "padding-021": [
-   "털 빠짐·이염"
+   "대가성"
   ],
   "padding-022": [],
   "padding-023": [
-   "털 빠짐·이염"
+   "사이즈·핏"
   ],
   "padding-024": [],
   "padding-025": [],
@@ -490,10 +522,16 @@
   "padding-032": [],
   "padding-033": [],
   "padding-034": [],
-  "padding-035": [],
+  "padding-035": [
+   "반품비 부담"
+  ],
   "padding-036": [],
-  "padding-037": [],
-  "padding-038": [],
+  "padding-037": [
+   "반품비 부담"
+  ],
+  "padding-038": [
+   "사이즈·핏"
+  ],
   "padding-039": [],
   "padding-040": [],
   "padding-041": [],
@@ -501,51 +539,49 @@
   "padding-043": [],
   "padding-044": [],
   "padding-045": [
-   "사이즈·핏"
+   "털 빠짐·이염"
   ],
   "padding-046": [],
   "padding-047": [],
-  "padding-048": [
-   "털 빠짐·이염"
-  ],
+  "padding-048": [],
   "padding-049": [],
   "padding-050": [],
   "padding-051": [],
-  "padding-052": [
+  "padding-052": [],
+  "padding-053": [
    "털 빠짐·이염"
   ],
-  "padding-053": [],
   "padding-054": [],
-  "padding-055": [
-   "털 빠짐·이염"
+  "padding-055": [],
+  "padding-056": [
+   "대가성"
   ],
-  "padding-056": [],
   "padding-057": [],
-  "padding-058": [
-   "털 빠짐·이염"
-  ],
+  "padding-058": [],
   "padding-059": [
    "털 빠짐·이염"
   ],
-  "padding-060": [],
+  "padding-060": [
+   "털 빠짐·이염"
+  ],
   "padding-061": [],
   "padding-062": [],
   "padding-063": [],
   "padding-064": [],
-  "padding-065": [
+  "padding-065": [],
+  "padding-066": [],
+  "padding-067": [
    "털 빠짐·이염"
   ],
-  "padding-066": [
-   "사이즈·핏"
+  "padding-068": [
+   "대가성"
   ],
-  "padding-067": [],
-  "padding-068": [],
   "padding-069": [],
-  "padding-070": [
+  "padding-070": [],
+  "padding-071": [],
+  "padding-072": [
    "털 빠짐·이염"
   ],
-  "padding-071": [],
-  "padding-072": [],
   "padding-073": [],
   "padding-074": [],
   "padding-075": [],
@@ -555,20 +591,22 @@
   "padding-079": [],
   "padding-080": [],
   "padding-081": [],
-  "padding-082": [],
-  "padding-083": [
-   "사이즈·핏"
+  "padding-082": [
+   "대가성"
   ],
+  "padding-083": [],
   "padding-084": [],
-  "padding-085": [],
+  "padding-085": [
+   "반품비 부담"
+  ],
   "padding-086": [],
   "padding-087": [],
   "padding-088": [],
-  "padding-089": [
-   "반품비 부담"
-  ],
+  "padding-089": [],
   "padding-090": [],
-  "padding-091": [],
+  "padding-091": [
+   "털 빠짐·이염"
+  ],
   "padding-092": [],
   "padding-093": [],
   "padding-094": [],
@@ -577,84 +615,86 @@
   "padding-097": [],
   "padding-098": [],
   "padding-099": [],
-  "padding-100": [
-   "털 빠짐·이염"
-  ],
+  "padding-100": [],
   "padding-101": [],
-  "padding-102": [],
-  "padding-103": [
-   "반품비 부담"
-  ],
-  "padding-104": [
-   "반품비 부담"
-  ],
-  "padding-105": [
+  "padding-102": [
    "털 빠짐·이염"
+  ],
+  "padding-103": [],
+  "padding-104": [],
+  "padding-105": [
+   "대가성"
   ],
   "padding-106": [
-   "반품비 부담"
+   "사이즈·핏"
   ],
-  "padding-107": [],
-  "padding-108": [],
+  "padding-107": [
+   "털 빠짐·이염"
+  ],
+  "padding-108": [
+   "털 빠짐·이염"
+  ],
   "padding-109": [],
   "padding-110": [],
   "padding-111": [],
   "padding-112": [],
-  "padding-113": [
-   "털 빠짐·이염"
-  ],
+  "padding-113": [],
   "padding-114": [],
-  "padding-115": [],
-  "padding-116": [
+  "padding-115": [
    "털 빠짐·이염"
   ],
+  "padding-116": [],
   "padding-117": [],
-  "padding-118": [],
-  "padding-119": [
+  "padding-118": [
    "털 빠짐·이염"
   ],
+  "padding-119": [],
   "padding-120": [],
-  "padding-121": [
-   "사이즈·핏"
-  ],
+  "padding-121": [],
   "padding-122": [
    "사이즈·핏"
   ],
   "padding-123": [],
-  "padding-124": [],
+  "padding-124": [
+   "털 빠짐·이염"
+  ],
   "padding-125": [
-   "사이즈·핏"
+   "털 빠짐·이염"
   ],
-  "padding-126": [],
+  "padding-126": [
+   "반품비 부담"
+  ],
   "padding-127": [],
-  "padding-128": [],
-  "padding-129": [
-   "사이즈·핏"
+  "padding-128": [
+   "털 빠짐·이염"
   ],
+  "padding-129": [],
   "padding-130": [],
   "padding-131": [],
   "padding-132": [
-   "털 빠짐·이염"
-  ],
-  "padding-133": [],
-  "padding-134": [
    "사이즈·핏"
   ],
-  "padding-135": [],
-  "padding-136": [
-   "털 빠짐·이염"
+  "padding-133": [],
+  "padding-134": [],
+  "padding-135": [
+   "사이즈·핏"
   ],
+  "padding-136": [],
   "padding-137": [
-   "털 빠짐·이염"
+   "대가성"
   ],
   "padding-138": [],
-  "padding-139": [],
+  "padding-139": [
+   "사이즈·핏"
+  ],
   "padding-140": [
    "사이즈·핏"
   ],
   "padding-141": [],
   "padding-142": [],
-  "padding-143": [],
+  "padding-143": [
+   "사이즈·핏"
+  ],
   "padding-144": [],
   "padding-145": [],
   "padding-146": [],
